@@ -27,7 +27,7 @@ func parseCSV() map[string]string {
 	var err error
 
 	// Load file
-	f, err := os.Open("websites.csv")
+	f, err := os.Open("/Users/viethung/working_space/GitHub/alfred-web-searches/workflow/websites.csv")
 	if err != nil {
 		panic(err)
 	}
