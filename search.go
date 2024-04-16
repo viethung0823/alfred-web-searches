@@ -12,7 +12,7 @@ import (
 // TODO:
 func updateList() {
 	// Get websites list from GitHub
-	res, err := http.Get("https://raw.githubusercontent.com/nikitavoloboev/alfred-web-searches/master/workflow/websites.csv")
+	res, err := http.Get("https://raw.githubusercontent.com/viethung0823/alfred-web-searches/master/workflow/websites.csv")
 	if err != nil {
 		return
 	}

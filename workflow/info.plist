@@ -536,7 +536,7 @@
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
-				<string>https://github.com/nikitavoloboev/alfred-web-searches/edit/master/workflow/websites.csv</string>
+				<string>https://github.com/viethung0823/alfred-web-searches/edit/main/workflow/websites.csv</string>
 				<key>utf8</key>
 				<true/>
 			</dict>
@@ -979,7 +979,7 @@
 		</dict>
 	</array>
 	<key>readme</key>
-	<string>Details on how to use this workflow are found in the GitHub repo attached to the workflow. 
+	<string>Details on how to use this workflow are found in the GitHub repo attached to the workflow.
 
 Double click this workflow in sidebar -&gt; Open website.
 
