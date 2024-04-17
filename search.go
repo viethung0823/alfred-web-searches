@@ -42,8 +42,11 @@ func parseCSV() map[string]string {
 
 	// Holds user's search arguments and an appropriate search URL
 	links := make(map[string]string)
-
+	// Skip if the record does not contain a valid URL
 	for _, record := range records {
+		if record[1] == "" {
+			continue
+		}
 		links[record[0]] = record[1]
 	}
 
