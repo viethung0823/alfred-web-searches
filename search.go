@@ -50,7 +50,7 @@ func parseCSV() map[string]Link {
     links := make(map[string]Link)
     // Skip if the record does not contain a valid URL
     for _, record := range records {
-        if record[1] == "" {
+        if strings.TrimSpace(record[1]) == "" {
             continue
         }
         links[record[0]] = Link{Value: record[1], Subtitle: record[2], Tags: record[3]}
