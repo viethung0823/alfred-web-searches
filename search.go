@@ -23,34 +23,40 @@ func updateList() {
 }
 
 // parseCSV parses CSV for links and arguments.
-func parseCSV() map[string]string {
-	var err error
+type Link struct {
+    Value    string
+    Subtitle string
+    Tags     string
+}
 
-	// Load file
-	f, err := os.Open("/Users/viethung/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vault/Attachment/websites.csv")
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
+func parseCSV() map[string]Link {
+    var err error
 
-	r := csv.NewReader(f)
+    // Load file
+    f, err := os.Open("/Users/viethung/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vault/Attachment/websites.csv")
+    if err != nil {
+        panic(err)
+    }
+    defer f.Close()
 
-	records, err := r.ReadAll()
-	if err != nil {
-		log.Fatal(err)
-	}
+    r := csv.NewReader(f)
 
-	// Holds user's search arguments and an appropriate search URL
-	links := make(map[string]string)
-	// Skip if the record does not contain a valid URL
-	for _, record := range records {
-		if record[1] == "" {
-			continue
-		}
-		links[record[0]] = record[1]
-	}
+    records, err := r.ReadAll()
+    if err != nil {
+        log.Fatal(err)
+    }
 
-	return links
+    // Holds user's search arguments and an appropriate search URL
+    links := make(map[string]Link)
+    // Skip if the record does not contain a valid URL
+    for _, record := range records {
+        if record[1] == "" {
+            continue
+        }
+        links[record[0]] = Link{Value: record[1], Subtitle: record[2], Tags: record[3]}
+    }
+
+    return links
 }
 
 // doSearch searches through the websites and returns results to Alfred.
@@ -62,25 +68,24 @@ func doSearch() error {
 	links := parseCSV()
 
 	var re1 = regexp.MustCompile(`.: `)
-	var re2 = regexp.MustCompile(`(all)`)
 
-	for key, value := range links {
-		if strings.Contains(key, "r: ") {
-			wf.NewItem(key).Valid(true).Var("URL", value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Icon(redditIcon).Var("RECENT", re2.ReplaceAllString(value, `week`)).Subtitle("⌘ = Search past week")
-		} else if strings.Contains(key, "d: ") {
-			wf.NewItem(key).Valid(true).Var("URL", value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Icon(docIcon)
-		} else if strings.Contains(key, "g: ") {
-			wf.NewItem(key).Valid(true).Var("URL", value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Icon(githubIcon)
-		} else if strings.Contains(key, "s: ") {
-			wf.NewItem(key).Valid(true).Var("URL", value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Icon(stackIcon)
-		} else if strings.Contains(key, "f: ") {
-			wf.NewItem(key).Valid(true).Var("URL", value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Icon(forumsIcon)
-		} else if strings.Contains(key, "t: ") {
-			wf.NewItem(key).Valid(true).Var("URL", value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Icon(translateIcon)
-		} else {
-			wf.NewItem(key).Valid(true).Var("URL", value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key)
-		}
-	}
+	for key, link := range links {
+    if strings.Contains(key, "r: ") {
+        wf.NewItem(key).Valid(true).Var("URL", link.Value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Subtitle(link.Subtitle).Match(key + " " + link.Tags).Icon(redditIcon)
+    } else if strings.Contains(key, "d: ") {
+        wf.NewItem(key).Valid(true).Var("URL", link.Value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Subtitle(strings.TrimSpace(link.Subtitle)).Match(key + " " + link.Tags).Icon(docIcon)
+    } else if strings.Contains(key, "g: ") {
+        wf.NewItem(key).Valid(true).Var("URL", link.Value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Subtitle(strings.TrimSpace(link.Subtitle)).Match(key + " " + link.Tags).Icon(githubIcon)
+    } else if strings.Contains(key, "s: ") {
+        wf.NewItem(key).Valid(true).Var("URL", link.Value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Subtitle(strings.TrimSpace(link.Subtitle)).Match(key + " " + link.Tags).Icon(stackIcon)
+    } else if strings.Contains(key, "f: ") {
+        wf.NewItem(key).Valid(true).Var("URL", link.Value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Subtitle(strings.TrimSpace(link.Subtitle)).Match(key + " " + link.Tags).Icon(forumsIcon)
+    } else if strings.Contains(key, "t: ") {
+        wf.NewItem(key).Valid(true).Var("URL", link.Value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Subtitle(strings.TrimSpace(link.Subtitle)).Match(key + " " + link.Tags).Icon(translateIcon)
+    } else {
+        wf.NewItem(key).Valid(true).Var("URL", link.Value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Subtitle(strings.TrimSpace(link.Subtitle)).Match(key + " " + link.Tags)
+    }
+}
 
 	query = os.Args[1]
 
