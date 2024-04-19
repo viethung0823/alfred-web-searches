@@ -7,6 +7,7 @@ import (
 	"os"
 	"regexp"
 	"strings"
+  "github.com/deanishe/awgo"
 )
 
 // TODO:
@@ -28,6 +29,17 @@ type Link struct {
     Subtitle string
     Tags     string
 }
+
+var icons = func() map[*aw.Icon][]string {
+    return map[*aw.Icon][]string{
+        redditIcon:    {"r: ", "reddit"},
+        docIcon:       {"d: "},
+        githubIcon:    {"g: ", "github"},
+        stackIcon:     {"s: "},
+        forumsIcon:    {"f: "},
+        translateIcon: {"translate"},
+    }
+}()
 
 func parseCSV() map[string]Link {
     var err error
@@ -70,20 +82,20 @@ func doSearch() error {
 	var re1 = regexp.MustCompile(`.: `)
 
 	for key, link := range links {
-    if strings.Contains(key, "r: ") {
-        wf.NewItem(key).Valid(true).Var("URL", link.Value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Subtitle(link.Subtitle).Match(key + " " + link.Tags).Icon(redditIcon)
-    } else if strings.Contains(key, "d: ") {
-        wf.NewItem(key).Valid(true).Var("URL", link.Value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Subtitle(strings.TrimSpace(link.Subtitle)).Match(key + " " + link.Tags).Icon(docIcon)
-    } else if strings.Contains(key, "g: ") {
-        wf.NewItem(key).Valid(true).Var("URL", link.Value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Subtitle(strings.TrimSpace(link.Subtitle)).Match(key + " " + link.Tags).Icon(githubIcon)
-    } else if strings.Contains(key, "s: ") {
-        wf.NewItem(key).Valid(true).Var("URL", link.Value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Subtitle(strings.TrimSpace(link.Subtitle)).Match(key + " " + link.Tags).Icon(stackIcon)
-    } else if strings.Contains(key, "f: ") {
-        wf.NewItem(key).Valid(true).Var("URL", link.Value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Subtitle(strings.TrimSpace(link.Subtitle)).Match(key + " " + link.Tags).Icon(forumsIcon)
-    } else if strings.Contains(key, "t: ") {
-        wf.NewItem(key).Valid(true).Var("URL", link.Value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Subtitle(strings.TrimSpace(link.Subtitle)).Match(key + " " + link.Tags).Icon(translateIcon)
-    } else {
-        wf.NewItem(key).Valid(true).Var("URL", link.Value).Var("ARG", re1.ReplaceAllString(key, ``)).UID(key).Subtitle(strings.TrimSpace(link.Subtitle)).Match(key + " " + link.Tags)
+    item := wf.NewItem(key).
+    Valid(true).
+    Var("URL", link.Value).
+    Var("ARG", re1.ReplaceAllString(key, ``)).
+    UID(key).
+    Subtitle(strings.TrimSpace(link.Subtitle)).
+    Match(key + " " + link.Tags)
+    for icon, prefixes := range icons {
+        for _, prefix := range prefixes {
+          if strings.Contains(strings.ToLower(key), strings.ToLower(prefix)) || strings.Contains(strings.ToLower(link.Value), strings.ToLower(prefix)) || strings.Contains(strings.ToLower(link.Tags), strings.ToLower(prefix)) {
+            item.Icon(icon)
+            break
+          }
+        }
     }
 }
 
