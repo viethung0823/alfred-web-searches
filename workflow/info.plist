@@ -253,7 +253,7 @@
 	<key>description</key>
 	<string>Fuzzy search through a lot of web search queries</string>
 	<key>disabled</key>
-	<true/>
+	<false/>
 	<key>name</key>
 	<string>Web Searches Custom</string>
 	<key>objects</key>

@@ -7,7 +7,8 @@ import (
 	"os"
 	"regexp"
 	"strings"
-  "github.com/deanishe/awgo"
+
+	aw "github.com/deanishe/awgo"
 )
 
 // TODO:
@@ -32,13 +33,14 @@ type Link struct {
 
 var icons = func() map[*aw.Icon][]string {
     return map[*aw.Icon][]string{
-        facebookIcon:  {"facebook"},
+        facebookIcon:  {"f: ", "facebook"},
         redditIcon:    {"r: ", "reddit"},
         docIcon:       {"d: "},
         githubIcon:    {"g: ", "github"},
         stackIcon:     {"s: "},
-        forumsIcon:    {"f: "},
+        forumsIcon:    {"forum"},
         translateIcon: {"language"},
+        musicIcon: {"music"},
     }
 }()
 
