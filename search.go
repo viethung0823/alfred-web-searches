@@ -32,12 +32,12 @@ type Link struct {
 
 var icons = func() map[*aw.Icon][]string {
     return map[*aw.Icon][]string{
+        facebookIcon:  {"facebook"},
         redditIcon:    {"r: ", "reddit"},
         docIcon:       {"d: "},
         githubIcon:    {"g: ", "github"},
         stackIcon:     {"s: "},
         forumsIcon:    {"f: "},
-        facebookIcon:  {"facebook"},
         translateIcon: {"language"},
     }
 }()
