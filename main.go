@@ -14,10 +14,11 @@ var (
 	forumsIcon      = &aw.Icon{Value: "icons/forums.png"}
 	stackIcon       = &aw.Icon{Value: "icons/stack.png"}
 	docIcon         = &aw.Icon{Value: "icons/doc.png"}
+	facebookIcon    = &aw.Icon{Value: "icons/doc.png"}
 
 	query string
 
-	repo = "nikitavoloboev/alfred-web-searches"
+	repo = "viethung0823/alfred-web-searches"
 
 	wf *aw.Workflow
 )

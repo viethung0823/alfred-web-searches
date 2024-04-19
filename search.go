@@ -37,7 +37,8 @@ var icons = func() map[*aw.Icon][]string {
         githubIcon:    {"g: ", "github"},
         stackIcon:     {"s: "},
         forumsIcon:    {"f: "},
-        translateIcon: {"translate"},
+        facebookIcon:  {"facebook"},
+        translateIcon: {"language"},
     }
 }()
 
