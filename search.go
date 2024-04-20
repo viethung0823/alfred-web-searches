@@ -41,6 +41,7 @@ var icons = func() map[*aw.Icon][]string {
         forumsIcon:    {"forum"},
         translateIcon: {"language"},
         musicIcon: {"music"},
+        instagramIcon: {"instagram"},
     }
 }()
 
