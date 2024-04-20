@@ -19,6 +19,7 @@ var (
 	instagramIcon    		= &aw.Icon{Value: "icons/instagram.png"}
 	youtubeIcon    		= &aw.Icon{Value: "icons/youtube.png"}
 	linkedinIcon    		= &aw.Icon{Value: "icons/linkedin.png"}
+	utilsIcon    		= &aw.Icon{Value: "icons/utils.png"}
 
 	query string
 
