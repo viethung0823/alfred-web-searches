@@ -411,7 +411,8 @@
 			<dict>
 				<key>paths</key>
 				<array>
-					<string>~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vault/Attachment/websites.csv</string>
+					<string>~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vault/Attachment/csv/websites.csv</string>
+					<string>~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vault/Attachment/csv/GitHub.csv</string>
 				</array>
 				<key>toggle</key>
 				<false/>

@@ -36,7 +36,6 @@ func showUpdateStatus() {
 		wf.NewItem("An update is available!").
 			Subtitle("⇥ or ↩ to install update").
 			Valid(false).
-			Autocomplete("workflow:update").
-			Icon(updateAvailable)
+			Autocomplete("workflow:update")
 	}
 }
